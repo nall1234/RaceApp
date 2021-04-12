@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'RaceApp'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
