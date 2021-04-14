@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,8 +9,83 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Welcome {{user.name}}</title>
+    {% load mathfilters %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+
 </head>
+
 <body>
-    
+    <nav>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/main">Home</a></li>
+            <li><a href="/race">RacePace</a></li>
+            <li><a href="/stats/{{user.id}}">MyStats</a></li>
+            <li><a href="/messageboard">Message Board</a></li>
+            <li><a href="/runs">Runs</a></li>
+            <li><a href="/edit/{{user.id}}">Edit Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <section>
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Welcome {{user.first_name}}</h2>
+                    {% if user.image %}
+                    <img src="{{ user.image.url }}" alt="user image">
+                    {% endif %}
+                    <p>Add a new Run below</p>
+                    <form action="add_run" method="POST">
+                        {% csrf_token %}
+                        <label for="distance">Miles</label>
+                        <input type="number" step=0.01 min=0 class="form-control" name='distance'>
+                        <label for="hours">hours</label>
+                        <input type="number" min=0 max = 5 class="form-control" name="hours"><br>
+                        <label for="minutes">minutes</label>
+                        <input type="number" min=0 max=59 class="form-control" name="minutes"><br>
+                        <button type="submit" class="btn btn-primary px-4 float-right">Submit</button><br><br>
+                    </form>
+                    <div class="table-responsive">
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Distance</th>
+                                    <th>Pace</th>
+                                    <th>Miles Per Hour</th>
+                                </tr>
+                            </thead>
+                            {% for run in runs reversed %}
+                            <tbody></tbody>
+                            <tr>
+                                <td>{{run.created_on |date:'M d, Y'}}</td>
+                                <td>{{run.time}} minutes</td>
+                                <td>{{run.distance}} miles</td>
+                                <td>{{run.time|div:run.distance}} min miles</td>
+                                {% with pace=run.time|div:run.distance %}
+                                <td>{{60|div:pace |floatformat:2 }} MPH</td>
+                                {% endwith %}
+                            </tr>
+                            </tbody>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <h2>Recent Running Stats</h2>
+                </div>
+            </div>
+        </div>
+        <section>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+            <script src="{% static 'JS/scripts.js' %}"></script>
 </body>
+
 </html>
