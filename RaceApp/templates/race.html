@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
     <title>Race Pace</title>
 </head>
+
 <body>
     <nav>
         <div class="hamburger">
@@ -23,7 +25,7 @@
             <li><a href="/race">RacePace</a></li>
             <li><a href="/stats/{{user.id}}">MyStats</a></li>
             <li><a href="/messageboard">Message Board</a></li>
-            <li><a href="/runs">Runs</a></li>
+            
             <li><a href="/edit/{{user.id}}">Edit Profile</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
@@ -32,12 +34,58 @@
         <div class="row">
             <div class="col-sm-6">
                 <h2>Enter Race Information Below</h2>
+                <form action="add_race" method="POST">
+                    {% csrf_token %}
+                    <label for="distance">Distance Goal</label>
+                    <input type="number" class="form-control" name='distance'>
+                    <button type="submit" class="btn btn-primary px-4">Make RacePace</button>
+                </form><br>
             </div>
-            <div class="col-sm-6">
-                <h2>Current Race Pace</h2>
+            <div class="col-sm-6"></div>
+            <div class="col-sm-3">
+                <h4>Week Four Runs</h4>
+                <p>Sunday: {{race4.sunday}}</p>
+                <p>Mondday: {{race4.monday}}</p>
+                <p>Tuesday: {{race4.tuesday}}</p>
+                <p>Wednesday: {{race4.wednesday}}</p>
+                <p>Thursday: {{race4.thursday}}</p>
+                <p>Friday: {{race4.friday}}</p>
+                <p>Saturday: {{race4.sat}}</p>
+            </div>
+            <div class="col-sm-3">
+                <h4>Week Three Runs</h4>
+                <p>Sunday: {{race3.sunday}}</p>
+                <p>Mondday: {{race3.monday}}</p>
+                <p>Tuesday: {{race3.tuesday}}</p>
+                <p>Wednesday: {{race3.wednesday}}</p>
+                <p>Thursday: {{race3.thursday}}</p>
+                <p>Friday: {{race3.friday}}</p>
+                <p>Saturday: {{race3.sat}}</p>
+            </div>
+            <div class="col-sm-3">
+                <h4>Week Two Runs</h4>
+                <p>Sunday: {{race2.sunday}}</p>
+                <p>Mondday: {{race2.monday}}</p>
+                <p>Tuesday: {{race2.tuesday}}</p>
+                <p>Wednesday: {{race2.wednesday}}</p>
+                <p>Thursday: {{race2.thursday}}</p>
+                <p>Friday: {{race2.friday}}</p>
+                <p>Saturday: {{race2.sat}}</p>
+            </div>
+            <div class="col-sm-3">
+                <h4>Week One Runs</h4>
+                <p>Sunday: {{race1.sunday}}</p>
+                <p>Mondday: {{race1.monday}}</p>
+                <p>Tuesday: {{race1.tuesday}}</p>
+                <p>Wednesday: {{race1.wednesday}}</p>
+                <p>Thursday: {{race1.thursday}}</p>
+                <p>Friday: {{race1.friday}}</p>
+                <p>Saturday: {{race1.sat}}</p>
             </div>
         </div>
     </div>
+    </div>
     <script src="{% static 'JS/scripts.js' %}"></script>
 </body>
+
 </html>

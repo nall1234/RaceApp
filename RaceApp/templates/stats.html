@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +25,7 @@
             <li><a href="/race">RacePace</a></li>
             <li><a href="/stats/{{user.id}}">MyStats</a></li>
             <li><a href="/messageboard">Message Board</a></li>
-            <li><a href="/runs">Runs</a></li>
+            
             <li><a href="/edit/{{user.id}}">Edit Profile</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
@@ -32,11 +33,30 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-sm-6">
-                <h2>Just the pic}</h2>
+                <img src="{{ user.image.url }}" height="400" alt="user image">
+                
+                <p>Add a new Run below</p>
+                <form action="/add_run" method="POST">
+                    {% csrf_token %}
+                    <label for="date">Date</label>
+                    <input type="date" class="form-control" name='date'>
+                    <label for="distance">Miles</label>
+                    <input type="number" step=0.01 min=0 class="form-control" name='distance'>
+                    <label for="hours">hours</label>
+                    <input type="number" min=0 max = 5 class="form-control" name="hours"><br>
+                    <label for="minutes">minutes</label>
+                    <input type="number" min=0 max=59 class="form-control" name="minutes"><br>
+                    <button type="submit" class="btn btn-primary px-4 float-right">Submit</button><br><br>
+                </form>
             </div>
             <div class="col-sm-6">
-                <h2>Lifetime Stats</h2>
-                <p>Total run ever {{total_distance}}</p>
+                <h2>Lifetime Stats</h2>                
+                <p>Lifetime Miles : {{total_distance}}</p>
+                <p>Lifetime Runs : {{user.run.all.count}}</p>
+                <p>Average Speed : {{avepace |floatformat:2}}</p>
+                <p>Average Mile Split : {{ mile_split |floatformat:2}}</p>
+                <p>Average Distance : {{avedistance |floatformat:2}}</p>
+                
                 <div class="table-responsive">
                     <table class='table'>
                         <thead>
@@ -68,4 +88,5 @@
     </div>
     <script src="{% static 'JS/scripts.js' %}"></script>
 </body>
+
 </html>

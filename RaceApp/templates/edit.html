@@ -23,7 +23,7 @@
             <li><a href="/race">RacePace</a></li>
             <li><a href="/stats/{{user.id}}">MyStats</a></li>
             <li><a href="/messageboard">Message Board</a></li>
-            <li><a href="/runs">Runs</a></li>
+            
             <li><a href="/edit/{{user.id}}">Edit Profile</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
@@ -38,21 +38,26 @@
     <div class="container py-4">
         <div class="row">
             <div class="col-sm-6">
-                <form action='/edit/{{user.id}}' method="POST" enctype="multipart/form-data">
+                <form action='/edit/{{user.id}}' method="POST" >
                     {% csrf_token %}
                     <label for="first_name">First Name</label>
                     <input type="text" class="form-control" value = "{{user.first_name}}" name='first_name'>
                     <label for="last_name">Last Name</label>
                     <input type="text" class="form-control" value = "{{user.last_name}}"name="last_name">
                     <label for="email">Email Address</label>
-                    <input type="text" class="form-control" value = "{{user.email}}" name='email'><br>
-                    <label for="image">Image</label>
-                    <input type="file" name="image">
+                    <input type="text" class="form-control" value = "{{user.email}}" name='email'><br>                    
                     <button type="submit" class="btn btn-primary px-4">Update</button>
+                </form><br><br>
+                <form action="/add_image/{{user.id}}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="image"></label>
+                    <input type="file" name="image">
+                    <button type="submit" class="btn btn-primary px-4">Add Image</button>
                 </form>
             </div>
             <div class="col-sm-6">
-                <h2>Just the pic</h2>
+                <img src="{{ user.image.url }}"  height="400" alt="user image">
+                
             </div>
         </div>
     </div>
